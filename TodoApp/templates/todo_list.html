@@ -1,0 +1,43 @@
+{% load static %}
+
+<link rel="stylesheet" type="text/css" href="{% static 'styles.css' %}" />
+<h1>Todo App</h1>
+<form method="post" class="todo-form">
+  {% csrf_token %}
+  <div class="form-group">
+    <label for="{{ form.title.id_for_label }}">Title:</label>
+    {{ form.title }}
+  </div>
+  <div class="form-group">
+    <label for="{{ form.description.id_for_label }}">Description:</label>
+    {{ form.description }}
+  </div>
+  <div class="form-group">
+    <label for="{{ form.due_date.id_for_label }}">Due Date:</label>
+    {{ form.due_date }}
+  </div>
+  <button type="submit" class="btn-submit">Add Todo</button>
+</form>
+
+<div class="container">
+  <h1>Todo List</h1>
+  <ul class="todo-list">
+    {% for todo in todos %}
+    <li class="todo-item">
+      <h3>{{ todo.title }}</h3>
+      <p>{{ todo.description }}</p>
+      <p>Created on: {{ todo.created_at|date:"F j, Y" }}</p>
+      <p>Due Date: {{ todo.due_date }}</p>
+      {% if todo.completed %}
+      <p class="completed">
+        Completed on: {{ todo.completed_date|date:"F j, Y" }} &#x2714;
+      </p>
+      {% endif %}
+      <!-- Add more HTML for other attributes -->
+      <a href="{% url 'complete_todo' todo.id %}">Mark Completed</a>
+      <a href="{% url 'edit_todo' todo.id %}">Edit</a>
+      <a href="{% url 'delete_todo' todo.id %}">Delete</a>
+    </li>
+    {% endfor %}
+  </ul>
+</div>

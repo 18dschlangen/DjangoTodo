@@ -1,0 +1,21 @@
+{% load static %}
+
+<link rel="stylesheet" type="text/css" href="{% static 'styles.css' %}" />
+
+<h1>Todo App</h1>
+<form method="post" class="todo-form">
+  {% csrf_token %}
+  <div class="form-group">
+    <label for="{{ form.title.id_for_label }}">Title:</label>
+    {{ form.title }}
+  </div>
+  <div class="form-group">
+    <label for="{{ form.description.id_for_label }}">Description:</label>
+    {{ form.description }}
+  </div>
+  <div class="form-group">
+    <label for="{{ form.due_date.id_for_label }}">Due Date:</label>
+    {{ form.due_date }}
+  </div>
+  <button type="submit" class="btn-submit">Add Todo</button>
+</form>
